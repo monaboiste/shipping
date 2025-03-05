@@ -33,6 +33,7 @@ _and then, reimport the project into IntelliJ._
   expansion
 - use fluent naming convention for the getters if possible (see: `lombok.config`) to align with
   java `record` (allows seamlessly converting between plain immutable java classes and records)
+- use a snake case format to define Gradle tasks
 
 ### SQL
 

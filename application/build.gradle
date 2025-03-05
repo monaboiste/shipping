@@ -4,6 +4,8 @@ plugins {
   id("logging-conventions")
 
   id("groovy-testing-conventions")
+
+  id("java-publishing-conventions")
 }
 
 dependencies {
