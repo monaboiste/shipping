@@ -1,4 +1,4 @@
-package com.monaboiste.shipping;
+package com.github.monaboiste.shipping;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
