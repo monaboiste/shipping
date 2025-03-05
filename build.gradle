@@ -1,8 +1,10 @@
 plugins {
 	id("idea")
+	id("java-publishing-conventions")
+	id("dependency-analysis-conventions")
 }
 
-group = 'com.github.monaboiste.shipping'
+group = "com.github.monaboiste"
 
 idea {
 	module {

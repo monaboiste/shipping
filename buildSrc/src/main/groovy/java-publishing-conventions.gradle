@@ -26,7 +26,7 @@ gradle.rootProject {
 publishing {
   publications {
     mavenJava(MavenPublication) {
-      from components.java
+      from(components.java)
       versionMapping {
         // use the versions resolved on the runtimeClasspath for dependencies declared in api
         // which are mapped to compile scope (default)
