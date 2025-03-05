@@ -7,3 +7,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "shipping"
+
+include(":application")

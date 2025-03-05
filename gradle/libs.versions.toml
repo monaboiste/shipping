@@ -1,0 +1,41 @@
+[versions]
+java = "21"
+spring-boot = "3.4.3"
+slf4j = "2.0.16"
+logback = "1.4.+"
+
+groovy = "4.0.+"
+spock = "2.4-M4-groovy-4.0"
+
+
+[plugins]
+# Nothing here - the external plugins need to be added as implementation dependencies before they can be
+# applied in precompiled script plugin (source: https://docs.gradle.org/current/userguide/custom_plugins.html#applying_external_plugins_in_precompiled_script_plugins)
+# Gradle's `alias` can be used only on project level.
+
+[libraries]
+spring-boot-plugin = { group = "org.springframework.boot", name = "spring-boot-gradle-plugin", version.ref = "spring-boot" }
+
+# Development
+spring-boot-bom = { group = "org.springframework.boot", name = "spring-boot-dependencies", version.ref = "spring-boot" }
+annotations = { group = "org.jetbrains", name = "annotations", version = "24.+" }
+
+# Publishing and versioning
+nebula-release-plugin = { group = "com.netflix.nebula", name = "nebula-release-plugin", version = "19.0.+" }
+
+# Logging
+slf4j = { group = "org.slf4j", name = "slf4j-api", version.ref = "slf4j" }
+logback-classic = { group = "ch.qos.logback", name = "logback-classic", version.ref = "logback" }
+logstash-encoder = { group = "net.logstash.logback", name = "logstash-logback-encoder", version = "7.4" }
+
+# Testing
+groovy = { group = "org.apache.groovy", name = "groovy", version.ref = "groovy" }
+spock-bom = { group = "org.spockframework", name = "spock-bom", version.ref = "spock" }
+spock-core = { group = "org.spockframework", name = "spock-core" }
+spock-spring = { group = "org.spockframework", name = "spock-spring" }
+assertj = { group = "org.assertj", name = "assertj-core", version = "3.+" }
+easy-random = { group = "org.jeasy", name = "easy-random-core", version = "5.0.0" }
+
+# Checks and linting
+sonarlint-plugin = { group = "name.remal.gradle-plugins.sonarlint", name = "sonarlint", version = "4.2.14" }
+dependency-analysis-plugin = { group = "com.autonomousapps", name = "dependency-analysis-gradle-plugin", version = "2.4.2" }

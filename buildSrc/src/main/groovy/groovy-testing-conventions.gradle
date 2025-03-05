@@ -1,0 +1,27 @@
+plugins {
+  id("groovy")
+}
+
+dependencies {
+  testImplementation(libs.groovy)
+  testImplementation(platform(libs.spock.bom))
+  testImplementation(libs.spock.core)
+  if (plugins.hasPlugin("spring-boot-conventions")) {
+    testRuntimeOnly(libs.spock.spring)
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+  }
+  // Please, do not add too much dependencies here
+  testImplementation(libs.assertj)
+  testImplementation(libs.easy.random)
+}
+
+tasks.named("compileTestGroovy") {
+  groovyOptions.javaAnnotationProcessing = true // Java annotation processors should process annotations on stub
+}
+
+tasks.named("test") {
+  useJUnitPlatform()
+  testLogging {
+    showStandardStreams = true
+  }
+}

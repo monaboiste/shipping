@@ -1,0 +1,19 @@
+plugins {
+  id("java")
+}
+
+java {
+  toolchain {
+    languageVersion.set(JavaLanguageVersion.of(libs.versions.java.get()))
+  }
+}
+
+tasks.withType(JavaCompile) {
+  options.compilerArgs
+    << "-Xlint:unchecked"
+    << "-Xlint:deprecation"
+}
+
+dependencies {
+  compileOnly(libs.annotations)
+}

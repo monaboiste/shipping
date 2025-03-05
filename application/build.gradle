@@ -1,0 +1,10 @@
+plugins {
+  id("java-conventions")
+  id("spring-boot-conventions")
+  id("logging-conventions")
+
+  id("groovy-testing-conventions")
+}
+
+dependencies {
+}
