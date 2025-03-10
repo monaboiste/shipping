@@ -1,8 +1,8 @@
-package com.github.monaboiste.shipping.shipment.event;
+package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.shipment.BatchEvent;
-import com.github.monaboiste.shipping.shipment.Shipment;
-import com.github.monaboiste.shipping.shipment.ShipmentWriteRepository;
+import com.github.monaboiste.shipping.shipment.event.Event;
+import com.github.monaboiste.shipping.shipment.event.EventPublisher;
+import com.github.monaboiste.shipping.shipment.event.Snapshot;
 
 import java.util.List;
 
@@ -21,20 +21,26 @@ import java.util.List;
  * (e.g., {@code BEFORE_COMMIT}) or outside of it. Avoid mixing database operations with external TCP calls
  * within a single transaction.
  */
-public class PublishingShipmentWriteRepository implements ShipmentWriteRepository {
-    private final EventPublisher<ShipmentSnapshot> eventPublisher;
-    private final ShipmentWriteRepository delegate;
+@SuppressWarnings("squid:S119")
+public class PublishingWriteRepository<
+        ID,
+        T extends AggregateRoot<ID, S>,
+        S extends Snapshot
+        > implements WriteRepository<ID, T> {
 
-    public PublishingShipmentWriteRepository(EventPublisher<ShipmentSnapshot> eventPublisher,
-                                             ShipmentWriteRepository delegate) {
+    private final EventPublisher<S> eventPublisher;
+    private final WriteRepository<ID, T> delegate;
+
+    public PublishingWriteRepository(EventPublisher<S> eventPublisher,
+                                     WriteRepository<ID, T> delegate) {
         this.eventPublisher = eventPublisher;
         this.delegate = delegate;
     }
 
     @Override
-    public void save(Shipment shipment) {
-        var events = shipment.flushPendingEvents();
-        delegate.save(shipment);
+    public void save(T t) {
+        var events = t.flushPendingEvents();
+        delegate.save(t);
 
         publish(events);
     }
@@ -44,7 +50,7 @@ public class PublishingShipmentWriteRepository implements ShipmentWriteRepositor
      *
      * @param events events to publish
      */
-    private void publish(List<Event<ShipmentSnapshot>> events) {
+    private void publish(List<Event<S>> events) {
         eventPublisher.publish(new BatchEvent<>(events));
         events.forEach(eventPublisher::publish);
     }
