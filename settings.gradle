@@ -9,4 +9,6 @@ dependencyResolutionManagement {
 rootProject.name = "shipping"
 
 include(":application")
+
 include(":shipment:shipment-domain")
+include(":shipment:shipment-application")

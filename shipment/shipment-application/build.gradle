@@ -1,0 +1,20 @@
+plugins {
+    id("java-conventions")
+    id("spring-boot-conventions")
+    id("logging-conventions")
+
+    id("groovy-testing-conventions")
+
+    id("java-publishing-conventions")
+    id("java-lint-conventions")
+    id("dependency-analysis-conventions")
+}
+
+dependencies {
+    implementation project(":shipment:shipment-domain")
+
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+}

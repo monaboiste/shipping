@@ -18,7 +18,7 @@ import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.PENDING;
 
 public class Shipment {
-    private final List<DomainEvent<ShipmentSnapshot>> pendingEvents = new ArrayList<>();
+    private final List<Event<ShipmentSnapshot>> pendingEvents = new ArrayList<>();
     private int version;
 
     private final ShipmentId id;
@@ -119,7 +119,7 @@ public class Shipment {
      *
      * @return a collection of the pending events (commited changes).
      */
-    public List<DomainEvent<ShipmentSnapshot>> flushPendingEvents() {
+    public List<Event<ShipmentSnapshot>> flushPendingEvents() {
         incrementVersion();
         var returned = new ArrayList<>(pendingEvents);
         pendingEvents.clear();

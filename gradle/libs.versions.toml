@@ -19,6 +19,7 @@ spring-boot-plugin = { group = "org.springframework.boot", name = "spring-boot-g
 # Development
 spring-boot-bom = { group = "org.springframework.boot", name = "spring-boot-dependencies", version.ref = "spring-boot" }
 annotations = { group = "org.jetbrains", name = "annotations", version = "24.+" }
+lombok = { group = "org.projectlombok", name = "lombok", version = "1.18.34" }
 
 # Publishing and versioning
 nebula-release-plugin = { group = "com.netflix.nebula", name = "nebula-release-plugin", version = "19.0.+" }
