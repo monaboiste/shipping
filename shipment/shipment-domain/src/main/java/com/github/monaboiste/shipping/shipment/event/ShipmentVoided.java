@@ -5,13 +5,13 @@ import com.github.monaboiste.shipping.shipment.Shipment;
 import java.time.Instant;
 import java.util.UUID;
 
-public class ShipmentAllocated implements DomainEvent<ShipmentSnapshot> {
+public class ShipmentVoided implements DomainEvent<ShipmentSnapshot> {
     private final String eventId;
     private final Instant occurredAt;
     private final String aggregateId;
     private final ShipmentSnapshot payload;
 
-    public ShipmentAllocated(Shipment shipment) {
+    public ShipmentVoided(Shipment shipment) {
         this.eventId = UUID.randomUUID().toString();
         this.occurredAt = Instant.now();
         this.aggregateId = shipment.id().value();
@@ -25,7 +25,7 @@ public class ShipmentAllocated implements DomainEvent<ShipmentSnapshot> {
 
     @Override
     public Class<? extends Event<ShipmentSnapshot>> type() {
-        return ShipmentAllocated.class;
+        return ShipmentVoided.class;
     }
 
     @Override
@@ -35,7 +35,7 @@ public class ShipmentAllocated implements DomainEvent<ShipmentSnapshot> {
 
     @Override
     public String name() {
-        return "ShipmentAllocated";
+        return "ShipmentVoided";
     }
 
     @Override

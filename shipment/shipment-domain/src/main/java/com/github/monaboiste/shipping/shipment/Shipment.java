@@ -5,14 +5,17 @@ import com.github.monaboiste.shipping.shipment.error.DomainException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentSnapshot;
+import com.github.monaboiste.shipping.shipment.event.ShipmentVoided;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
+import static com.github.monaboiste.shipping.shipment.ShipmentStatus.MANIFESTED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.PENDING;
 
 public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
+
     private final ShipmentId id;
     private Sender sender;
     private Receiver receiver;
@@ -73,6 +76,14 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
         }
         allocationContext = new AllocationContext(carrierServiceId);
         appendEvent(new ShipmentReallocated(this));
+    }
+
+    public void cancel() {
+        if (status.afterOrEqual(MANIFESTED)) {
+            throw new DomainException("The shipment cannot be cancelled as it has been already manifested.");
+        }
+        allocationContext = null;
+        appendEvent(new ShipmentVoided(this));
     }
 
     @Override

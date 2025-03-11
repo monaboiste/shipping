@@ -5,6 +5,7 @@ import com.github.monaboiste.shipping.shipment.Sender;
 import com.github.monaboiste.shipping.shipment.Shipment;
 import com.github.monaboiste.shipping.shipment.ShipmentId;
 
+// TODO: make interface
 public class ShipmentSnapshot implements Snapshot {
     private final ShipmentId shipmentId;
     private final Sender sender;

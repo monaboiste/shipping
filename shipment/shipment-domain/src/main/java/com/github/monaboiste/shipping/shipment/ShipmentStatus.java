@@ -3,6 +3,7 @@ package com.github.monaboiste.shipping.shipment;
 import org.jetbrains.annotations.NotNull;
 
 public enum ShipmentStatus {
+
     PENDING("pending"),
     ALLOCATED("allocated"),
     MANIFESTED("manifested"),

@@ -4,6 +4,7 @@ import com.github.monaboiste.shipping.shipment.error.CannotBeEmptyException;
 import org.jetbrains.annotations.Nullable;
 
 public class Receiver {
+
     private String firstName;
     private String lastName;
     private StructuredAddress address;

@@ -13,6 +13,8 @@ plugins {
 dependencies {
     implementation project(":shipment:shipment-domain")
 
+    implementation("org.springframework:spring-tx")
+
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     testCompileOnly(libs.lombok)

@@ -10,6 +10,7 @@ import java.util.List;
 
 @SuppressWarnings("squid:S119")
 public abstract class AggregateRoot<ID, S extends Snapshot> {
+
     private final List<Event<S>> pendingEvents = new ArrayList<>();
     private int version;
 
