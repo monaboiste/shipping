@@ -1,6 +1,6 @@
 package com.github.monaboiste.shipping.event;
 
-import com.github.monaboiste.shipping.shipment.Shipment;
+import com.github.monaboiste.shipping.Shipment;
 
 import java.time.Instant;
 import java.util.UUID;

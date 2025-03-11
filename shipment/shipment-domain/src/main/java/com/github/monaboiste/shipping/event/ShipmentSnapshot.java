@@ -1,9 +1,9 @@
 package com.github.monaboiste.shipping.event;
 
-import com.github.monaboiste.shipping.shipment.Receiver;
-import com.github.monaboiste.shipping.shipment.Sender;
-import com.github.monaboiste.shipping.shipment.Shipment;
-import com.github.monaboiste.shipping.shipment.ShipmentId;
+import com.github.monaboiste.shipping.Receiver;
+import com.github.monaboiste.shipping.Sender;
+import com.github.monaboiste.shipping.Shipment;
+import com.github.monaboiste.shipping.ShipmentId;
 
 // TODO: make interface
 public class ShipmentSnapshot implements Snapshot {
