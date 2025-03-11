@@ -9,7 +9,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 @RequiredArgsConstructor
-public class VoidingService implements VoidShipment {
+class VoidingService implements VoidShipment {
 
     private final PlatformTransactionManager transactionManager;
 

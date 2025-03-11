@@ -1,4 +1,4 @@
-package com.github.monaboiste.shipping.shipment.event;
+package com.github.monaboiste.shipping.event;
 
 import com.github.monaboiste.shipping.shipment.AllocationContext;
 import com.github.monaboiste.shipping.shipment.CarrierServiceId;

@@ -1,8 +1,9 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.shipment.event.Event;
-import com.github.monaboiste.shipping.shipment.event.EventPublisher;
-import com.github.monaboiste.shipping.shipment.event.Snapshot;
+import com.github.monaboiste.shipping.event.BatchEvent;
+import com.github.monaboiste.shipping.event.Event;
+import com.github.monaboiste.shipping.event.EventPublisher;
+import com.github.monaboiste.shipping.event.Snapshot;
 
 import java.util.List;
 

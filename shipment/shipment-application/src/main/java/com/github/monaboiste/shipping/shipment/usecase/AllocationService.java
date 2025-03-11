@@ -10,7 +10,7 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
 @RequiredArgsConstructor
-public class AllocationService implements AllocateShipment, ReallocateShipment {
+class AllocationService implements AllocateShipment, ReallocateShipment {
 
     private final PlatformTransactionManager transactionManager;
 

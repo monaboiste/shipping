@@ -1,7 +1,4 @@
-package com.github.monaboiste.shipping.shipment;
-
-import com.github.monaboiste.shipping.shipment.event.Event;
-import com.github.monaboiste.shipping.shipment.event.Snapshot;
+package com.github.monaboiste.shipping.event;
 
 import java.util.List;
 import java.util.function.Consumer;

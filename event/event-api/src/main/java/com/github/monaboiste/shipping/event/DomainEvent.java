@@ -1,4 +1,4 @@
-package com.github.monaboiste.shipping.shipment.event;
+package com.github.monaboiste.shipping.event;
 
 /**
  * Represents internal (pure) domain event.

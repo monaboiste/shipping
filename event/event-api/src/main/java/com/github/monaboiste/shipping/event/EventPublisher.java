@@ -1,6 +1,4 @@
-package com.github.monaboiste.shipping.shipment.event;
-
-import com.github.monaboiste.shipping.shipment.BatchEvent;
+package com.github.monaboiste.shipping.event;
 
 public interface EventPublisher<S extends Snapshot> {
 

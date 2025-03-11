@@ -1,8 +1,8 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.shipment.event.DomainEvent;
-import com.github.monaboiste.shipping.shipment.event.Event;
-import com.github.monaboiste.shipping.shipment.event.Snapshot;
+import com.github.monaboiste.shipping.event.DomainEvent;
+import com.github.monaboiste.shipping.event.Event;
+import com.github.monaboiste.shipping.event.Snapshot;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.ArrayList;

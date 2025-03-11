@@ -2,10 +2,10 @@ package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.shipment.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.shipment.error.DomainException;
-import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentSnapshot;
-import com.github.monaboiste.shipping.shipment.event.ShipmentVoided;
+import com.github.monaboiste.shipping.event.ShipmentAllocated;
+import com.github.monaboiste.shipping.event.ShipmentReallocated;
+import com.github.monaboiste.shipping.event.ShipmentSnapshot;
+import com.github.monaboiste.shipping.event.ShipmentVoided;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
