@@ -11,7 +11,9 @@ plugins {
 }
 
 dependencies {
+    implementation project(":shared")
     implementation project(":event:event-api")
+    implementation project(":event:event-infrastructure")
     implementation project(":shipment:shipment-domain")
 
     implementation("org.springframework:spring-tx")

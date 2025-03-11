@@ -11,6 +11,7 @@ rootProject.name = "shipping"
 include(":application")
 include(":shared")
 include(":event:event-api")
+include(":event:event-infrastructure")
 
 include(":shipment:shipment-domain")
 include(":shipment:shipment-application")
