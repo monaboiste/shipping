@@ -1,40 +1,40 @@
 plugins {
-  id("idea")
-  id("groovy")
+    id("idea")
+    id("groovy")
 }
 
 sourceSets {
-  integrationTest {
-    groovy.srcDir("src/integration-test/groovy")
-    resources.srcDir("src/integration-test/resources")
-  }
+    integrationTest {
+        groovy.srcDir("src/integration-test/groovy")
+        resources.srcDir("src/integration-test/resources")
+    }
 }
 
 configurations {
-  // integrationTest inherits dependencies from test source set
-  integrationTestImplementation.extendsFrom testImplementation
-  integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
+    // integrationTest inherits dependencies from test source set
+    integrationTestImplementation.extendsFrom testImplementation
+    integrationTestRuntimeOnly.extendsFrom testRuntimeOnly
 }
 
 idea {
-  module {
-    testSources.from(sourceSets.integrationTest.groovy.srcDirs)
-  }
+    module {
+        testSources.from(sourceSets.integrationTest.groovy.srcDirs)
+    }
 }
 
 dependencies {
-  integrationTestImplementation(libs.jackson)
+    integrationTestImplementation(libs.jackson)
 }
 
 tasks.register("integration-test", Test) {
-  group("verification")
-  description("Run Integration tests")
+    group("verification")
+    description("Run Integration tests")
 
-  testClassesDirs = sourceSets.integrationTest.output.classesDirs
-  classpath = sourceSets.integrationTest.runtimeClasspath
+    testClassesDirs = sourceSets.integrationTest.output.classesDirs
+    classpath = sourceSets.integrationTest.runtimeClasspath
 
-  useJUnitPlatform()
-  testLogging {
-    showStandardStreams = true
-  }
+    useJUnitPlatform()
+    testLogging {
+        showStandardStreams = true
+    }
 }

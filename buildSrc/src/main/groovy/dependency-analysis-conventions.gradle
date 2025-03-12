@@ -4,7 +4,7 @@
  */
 
 plugins {
-  id("com.autonomousapps.dependency-analysis")
+    id("com.autonomousapps.dependency-analysis")
 }
 
 /*
@@ -14,40 +14,40 @@ plugins {
  * Docs: https://github.com/autonomousapps/dependency-analysis-gradle-plugin/wiki/Customizing-plugin-behavior
  */
 afterEvaluate { project ->
-  if (project == rootProject) {
-    dependencyAnalysis {
-      issues {
-        all {
-          structure {
-            bundle("springframework") {
-              include("org.springframework.*")
-              // jackson is shipped with springframework.boot starter bundle
-              includeDependency("com.fasterxml.jackson.core:jackson-annotations")
-              includeDependency("com.fasterxml.jackson.core:jackson-databind")
+    if (project == rootProject) {
+        dependencyAnalysis {
+            issues {
+                all {
+                    structure {
+                        bundle("springframework") {
+                            include("org.springframework.*")
+                            // jackson is shipped with springframework.boot starter bundle
+                            includeDependency("com.fasterxml.jackson.core:jackson-annotations")
+                            includeDependency("com.fasterxml.jackson.core:jackson-databind")
+                        }
+                    }
+                    onUnusedDependencies {
+                        exclude("org.slf4j:slf4j-api")
+                    }
+                    onUnusedAnnotationProcessors {
+                        // ignore unused annotation processors, eg. lombok
+                        severity("ignore")
+                    }
+                    ignoreSourceSet("test")
+                }
             }
-          }
-          onUnusedDependencies {
-            exclude("org.slf4j:slf4j-api")
-          }
-          onUnusedAnnotationProcessors {
-            // ignore unused annotation processors, eg. lombok
-            severity("ignore")
-          }
-          ignoreSourceSet("test")
         }
-      }
+
+        /*
+         * Root project task, i. e. `./gradlew dependency-analysis`
+         */
+        tasks.register("dependency-analysis") {
+            group("verification")
+            description("Run dependency analysis")
+
+            dependsOn(tasks.buildHealth)
+
+            // reports location defaults to "${rootDir}/build/reports/dependency-analysis/build-health-report.txt"
+        }
     }
-
-    /*
-     * Root project task, i. e. `./gradlew dependency-analysis`
-     */
-    tasks.register("dependency-analysis") {
-      group("verification")
-      description("Run dependency analysis")
-
-      dependsOn(tasks.buildHealth)
-
-      // reports location defaults to "${rootDir}/build/reports/dependency-analysis/build-health-report.txt"
-    }
-  }
 }

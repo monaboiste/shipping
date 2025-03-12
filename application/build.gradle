@@ -1,14 +1,14 @@
 plugins {
-  id("java-conventions")
-  id("spring-boot-conventions")
-  id("logging-conventions")
+    id("java-conventions")
+    id("spring-boot-conventions")
+    id("logging-conventions")
 
-  id("groovy-testing-conventions")
+    id("groovy-testing-conventions")
 
-  id("java-publishing-conventions")
-  id("java-lint-conventions")
-  id("java-formatting-conventions")
-  id("dependency-analysis-conventions")
+    id("java-publishing-conventions")
+    id("java-lint-conventions")
+    id("java-formatting-conventions")
+    id("dependency-analysis-conventions")
 }
 
 dependencies {

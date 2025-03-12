@@ -1,18 +1,18 @@
 plugins {
-  id("org.springframework.boot")
+    id("org.springframework.boot")
 }
 
 dependencies {
-  implementation(platform(libs.spring.boot.bom))
+    implementation(platform(libs.spring.boot.bom))
 
-  implementation("org.springframework.boot:spring-boot-starter-actuator")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
 
-  // Tracing
-  runtimeOnly("io.micrometer:micrometer-tracing-bridge-brave")
+    // Tracing
+    runtimeOnly("io.micrometer:micrometer-tracing-bridge-brave")
 }
 
 tasks.bootJar {
-  duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 /*
@@ -20,7 +20,7 @@ tasks.bootJar {
  * See: https://docs.spring.io/spring-boot/gradle-plugin/integrating-with-actuator.html
  */
 springBoot {
-  buildInfo()
+    buildInfo()
 }
 
 /*
@@ -36,7 +36,7 @@ springBoot {
  * (see: https://youtrack.jetbrains.com/issue/IDEA-296490)
  */
 processResources {
-  filesMatching("**/application*.properties") {
-    expand(project.properties)
-  }
+    filesMatching("**/application*.properties") {
+        expand(project.properties)
+    }
 }

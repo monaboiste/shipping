@@ -1,7 +1,7 @@
 dependencies {
-  implementation(platform(libs.spring.boot.bom))
+    implementation(platform(libs.spring.boot.bom))
 
-  implementation("org.springframework.boot:spring-boot-starter")
+    implementation("org.springframework.boot:spring-boot-starter")
 }
 
 /*
@@ -17,7 +17,7 @@ dependencies {
  * (see: https://youtrack.jetbrains.com/issue/IDEA-296490)
  */
 processResources {
-  filesMatching("**/application*.properties") {
-    expand(project.properties)
-  }
+    filesMatching("**/application*.properties") {
+        expand(project.properties)
+    }
 }

@@ -1,18 +1,18 @@
 plugins {
-	id("idea")
-	id("java-publishing-conventions")
-	id("dependency-analysis-conventions")
+    id("idea")
+    id("java-publishing-conventions")
+    id("dependency-analysis-conventions")
 }
 
 group = "com.github.monaboiste"
 
 idea {
-	module {
-		/*
-     * Set the flags to `true` if Intellij encounters a problem with downloading the sources.
-     * Beware, when set, the sources from ALL dependencies will be downloaded.
-     */
-		downloadJavadoc = false
-		downloadSources = false
-	}
+    module {
+        /*
+         * Set the flags to `true` if Intellij encounters a problem with downloading the sources.
+         * Beware, when set, the sources from ALL dependencies will be downloaded.
+         */
+        downloadJavadoc = false
+        downloadSources = false
+    }
 }

@@ -1,42 +1,42 @@
 plugins {
-  id("java")
-  id("name.remal.sonarlint")
+    id("java")
+    id("name.remal.sonarlint")
 }
 
 /*
  * Docs: https://github.com/remal-gradle-plugins/sonarlint?tab=readme-ov-file#configuration
  */
 sonarLint {
-  ignoreFailures = true
-  isGeneratedCodeIgnored = false
-  ignoredPaths.add("${rootDir}/buildSrc/**")
+    ignoreFailures = true
+    isGeneratedCodeIgnored = false
+    ignoredPaths.add("${rootDir}/buildSrc/**")
 
-  logging {
-    withDescription = false // Hide rule descriptions from console output
-    hideWarnings = true     // To hide warnings produced by this plugin
-  }
+    logging {
+        withDescription = false // Hide rule descriptions from console output
+        hideWarnings = true     // To hide warnings produced by this plugin
+    }
 }
 
 /*
  * Workaround to ignore sonarlintMain console output.
  */
 tasks.register("lint", Exec) {
-  group("verification")
-  description("Run SonarLint checks without SonarQube server")
+    group("verification")
+    description("Run SonarLint checks without SonarQube server")
 
-  workingDir(rootDir)
-  commandLine("./gradlew", "sonarlintMain")
+    workingDir(rootDir)
+    commandLine("./gradlew", "sonarlintMain")
 
-  doFirst {
-    standardOutput = new FileOutputStream("/dev/null")
-    errorOutput = new FileOutputStream("/dev/null")
-  }
+    doFirst {
+        standardOutput = new FileOutputStream("/dev/null")
+        errorOutput = new FileOutputStream("/dev/null")
+    }
 
-  doLast {
-    // reports location defaults to ${projectDir}/build/reports/sonarlint
-    def reportLocation = "file://${projectDir}/build/reports/sonarlint/sonarlintMain/sonarlintMain.html"
-    logger.lifecycle("Lint reports available at location: ${reportLocation}")
-  }
+    doLast {
+        // reports location defaults to ${projectDir}/build/reports/sonarlint
+        def reportLocation = "file://${projectDir}/build/reports/sonarlint/sonarlintMain/sonarlintMain.html"
+        logger.lifecycle("Lint reports available at location: ${reportLocation}")
+    }
 }
 
 /*
