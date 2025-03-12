@@ -2,7 +2,7 @@ package com.github.monaboiste.shipping.shipment.usecase;
 
 import com.github.monaboiste.shipping.ShipmentId;
 
-public interface VoidShipment {
+public interface DeallocateShipment {
 
-    void cancel(ShipmentId shipmentId);
+    void deallocate(ShipmentId shipmentId);
 }

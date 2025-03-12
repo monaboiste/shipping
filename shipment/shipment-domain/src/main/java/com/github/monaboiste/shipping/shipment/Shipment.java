@@ -89,10 +89,10 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
         appendEvent(new ShipmentReallocated(this));
     }
 
-    public void cancel() {
+    public void deallocate() {
         if (status.afterOrEqual(MANIFESTED)) {
             throw new DomainException(CANNOT_DEALLOCATE_MANIFESTED,
-                    "The shipment cannot be cancelled as it has been already manifested.");
+                    "The shipment cannot be deallocated as it has been already manifested.");
         }
         allocationContext = null;
         appendEvent(new ShipmentVoided(this));
