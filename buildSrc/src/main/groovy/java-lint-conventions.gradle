@@ -39,4 +39,8 @@ tasks.register("lint", Exec) {
   }
 }
 
-tasks.check.dependsOn(tasks.lint)
+/*
+ * The task takes quite significant amount of time to run
+ * - invoke it on demand.
+ */
+// tasks.check.dependsOn(tasks.lint)
