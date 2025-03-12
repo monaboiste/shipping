@@ -3,6 +3,11 @@ package com.github.monaboiste.shipping;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import org.jetbrains.annotations.Nullable;
 
+import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_COUNTRY;
+import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_LOCALITY;
+import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_POSTALCITY;
+import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_POSTCODE;
+
 public record StructuredAddress(Country country,
                                 String postcode,
                                 String postalCity,
@@ -19,18 +24,18 @@ public record StructuredAddress(Country country,
 
     public StructuredAddress {
         if (country == null) {
-            throw new CannotBeEmptyException("country");
+            throw new CannotBeEmptyException(EMPTY_ADDRESS_COUNTRY);
         }
         if (postcode == null || postcode.isBlank()) {
-            throw new CannotBeEmptyException("postcode");
+            throw new CannotBeEmptyException(EMPTY_ADDRESS_POSTCODE);
         }
         if (postalCity == null || postalCity.isBlank()) {
-            throw new CannotBeEmptyException("postalCity");
+            throw new CannotBeEmptyException(EMPTY_ADDRESS_POSTALCITY);
         }
         if (city == null || city.isBlank() ||
             town == null || town.isBlank() ||
             village == null || village.isBlank()) {
-            throw new CannotBeEmptyException("city", "town", "village");
+            throw new CannotBeEmptyException(EMPTY_ADDRESS_LOCALITY);
         }
     }
 }

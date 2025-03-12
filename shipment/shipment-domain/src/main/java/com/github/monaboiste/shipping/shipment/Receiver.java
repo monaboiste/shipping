@@ -3,7 +3,10 @@ package com.github.monaboiste.shipping.shipment;
 import com.github.monaboiste.shipping.PhoneNumber;
 import com.github.monaboiste.shipping.StructuredAddress;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
+import com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes;
 import org.jetbrains.annotations.Nullable;
+
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.*;
 
 // todo: party archetype?
 public class Receiver {
@@ -18,7 +21,7 @@ public class Receiver {
                     StructuredAddress address,
                     @Nullable PhoneNumber phoneNumber) {
         if (address == null) {
-            throw new CannotBeEmptyException("address");
+            throw new CannotBeEmptyException(EMPTY_SHIPMENT_RECEIVER);
         }
         this.firstName = firstName;
         this.lastName = lastName;

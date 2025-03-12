@@ -16,6 +16,12 @@ import java.util.Optional;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.MANIFESTED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.PENDING;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_ALLOCATE_ALLOCATED;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_DEALLOCATE_MANIFESTED;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_REALLOCATE_NOT_ALLOCATED;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_ID;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_RECEIVER;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_SENDER;
 
 public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
@@ -28,13 +34,13 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
     public Shipment(ShipmentId id, Sender sender, Receiver receiver) {
         if (id == null) {
-            throw new CannotBeEmptyException("id");
+            throw new CannotBeEmptyException(EMPTY_SHIPMENT_ID);
         }
         if (sender == null) {
-            throw new CannotBeEmptyException("sender");
+            throw new CannotBeEmptyException(EMPTY_SHIPMENT_SENDER);
         }
         if (receiver == null) {
-            throw new CannotBeEmptyException("receiver");
+            throw new CannotBeEmptyException(EMPTY_SHIPMENT_RECEIVER);
         }
 
         this.id = id;
@@ -66,7 +72,8 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
     public void allocate(CarrierServiceId carrierServiceId) {
         if (status.after(ALLOCATED)) {
-            throw new DomainException("The shipment cannot be allocated as it's %s.".formatted(status));
+            throw new DomainException(CANNOT_ALLOCATE_ALLOCATED,
+                    "The shipment cannot be allocated as it's %s.".formatted(status));
         }
         status = ALLOCATED;
         allocationContext = new AllocationContext(carrierServiceId);
@@ -75,7 +82,8 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
     public void reallocate(CarrierServiceId carrierServiceId) {
         if (!status.equals(ALLOCATED)) {
-            throw new DomainException("The shipment cannot be reallocated as it is not allocated.");
+            throw new DomainException(CANNOT_REALLOCATE_NOT_ALLOCATED,
+                    "The shipment cannot be reallocated as it is not allocated.");
         }
         allocationContext = new AllocationContext(carrierServiceId);
         appendEvent(new ShipmentReallocated(this));
@@ -83,7 +91,8 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
     public void cancel() {
         if (status.afterOrEqual(MANIFESTED)) {
-            throw new DomainException("The shipment cannot be cancelled as it has been already manifested.");
+            throw new DomainException(CANNOT_DEALLOCATE_MANIFESTED,
+                    "The shipment cannot be cancelled as it has been already manifested.");
         }
         allocationContext = null;
         appendEvent(new ShipmentVoided(this));
