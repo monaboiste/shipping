@@ -9,4 +9,5 @@ dependencies {
 
   implementation(libs.sonarlint.plugin)
   implementation(libs.dependency.analysis.plugin)
+  implementation(libs.spotless.plugin)
 }

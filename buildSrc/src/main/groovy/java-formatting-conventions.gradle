@@ -1,0 +1,27 @@
+plugins {
+    id("com.diffplug.spotless")
+}
+
+spotless {
+    enforceCheck false // disable spotless task dependency to check - we'll register our own task
+
+    java {
+        target "src/*/java/**/*.java"
+        removeUnusedImports()
+    }
+}
+
+tasks.register("format-check") {
+    group("verification")
+    description("Check for the format violations")
+
+    dependsOn(tasks.spotlessCheck)
+}
+tasks.register("format") {
+    group("verification")
+    description("Apply formatting")
+
+    dependsOn(tasks.spotlessApply)
+}
+
+tasks.build.dependsOn(tasks.format)

@@ -37,6 +37,7 @@ spock-spring = { group = "org.spockframework", name = "spock-spring" }
 assertj = { group = "org.assertj", name = "assertj-core", version = "3.+" }
 easy-random = { group = "org.jeasy", name = "easy-random-core", version = "5.0.0" }
 
-# Checks and linting
+# Checks / linting / formatting
 sonarlint-plugin = { group = "name.remal.gradle-plugins.sonarlint", name = "sonarlint", version = "4.2.+" }
 dependency-analysis-plugin = { group = "com.autonomousapps", name = "dependency-analysis-gradle-plugin", version = "2.4.+" }
+spotless-plugin = { group = "com.diffplug.spotless", name = "spotless-plugin-gradle", version = "7.0.+" }

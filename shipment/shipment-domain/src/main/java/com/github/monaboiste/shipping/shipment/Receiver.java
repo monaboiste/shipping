@@ -3,7 +3,6 @@ package com.github.monaboiste.shipping.shipment;
 import com.github.monaboiste.shipping.PhoneNumber;
 import com.github.monaboiste.shipping.StructuredAddress;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
-import com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes;
 import org.jetbrains.annotations.Nullable;
 
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.*;

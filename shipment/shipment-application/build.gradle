@@ -7,6 +7,7 @@ plugins {
 
     id("java-publishing-conventions")
     id("java-lint-conventions")
+    id("java-formatting-conventions")
     id("dependency-analysis-conventions")
 }
 
