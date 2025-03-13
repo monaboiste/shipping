@@ -5,8 +5,6 @@ import com.github.monaboiste.shipping.shipment.Shipment;
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.shipment.ShipmentReadRepository;
 import com.github.monaboiste.shipping.shipment.ShipmentWriteRepository;
-import com.github.monaboiste.shipping.shipment.usecase.AllocateShipment;
-import com.github.monaboiste.shipping.shipment.usecase.ReallocateShipment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;

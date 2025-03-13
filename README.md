@@ -59,3 +59,9 @@ _and then, reimport the project into IntelliJ._
 ## Notable tasks
 
 tbc
+
+# Contribution
+Before you commit copy all hooks into `.git` directory:
+```shell
+cp ./hooks/* .git/hooks/
+```
