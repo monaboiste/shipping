@@ -2,6 +2,7 @@ package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.AggregateRoot;
 import com.github.monaboiste.shipping.CarrierServiceId;
+import com.github.monaboiste.shipping.Party;
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.error.DomainException;
@@ -26,13 +27,13 @@ import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.E
 public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
 
     private final ShipmentId id;
-    private Sender sender;
-    private Receiver receiver;
+    private Party sender;
+    private Party receiver;
     private ShipmentStatus status;
 
     private AllocationContext allocationContext;
 
-    public Shipment(ShipmentId id, Sender sender, Receiver receiver) {
+    public Shipment(ShipmentId id, Party sender, Party receiver) {
         if (id == null) {
             throw new CannotBeEmptyException(EMPTY_SHIPMENT_ID);
         }
@@ -55,8 +56,8 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
      * TODO: switch to flexible constructor if/when JEP 482 feature is released.
      */
     Shipment(ShipmentId id,
-             Sender sender,
-             Receiver receiver,
+             Party sender,
+             Party receiver,
              ShipmentStatus status,
              @Nullable AllocationContext allocationContext) {
         this.id = id;
@@ -103,11 +104,11 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
         return id;
     }
 
-    public Sender sender() {
+    public Party sender() {
         return sender;
     }
 
-    public Receiver receiver() {
+    public Party receiver() {
         return receiver;
     }
 

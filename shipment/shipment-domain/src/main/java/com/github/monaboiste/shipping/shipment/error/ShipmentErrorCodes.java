@@ -10,9 +10,6 @@ public final class ShipmentErrorCodes {
     public static final String EMPTY_SHIPMENT_SENDER = "shipment.sender";
     public static final String EMPTY_SHIPMENT_RECEIVER = "shipment.receiver";
 
-    public static final String EMPTY_SHIPMENT_SENDER_ADDRESS = "empty.shipment.sender.address";
-    public static final String EMPTY_SHIPMENT_RECEIVER_ADDRESS = "empty.shipment.receiver.address";
-
     private ShipmentErrorCodes() {
     }
 }
