@@ -1,8 +1,8 @@
 package com.github.monaboiste.shipping.event;
 
-public interface EventPublisher<S extends Snapshot> {
+public interface EventPublisher<P extends Payload> {
 
-    void publish(Event<S> events);
+    void publish(Event<P> events);
 
-    void publish(BatchEvent<S> events);
+    void publish(BatchEvent<P> events);
 }

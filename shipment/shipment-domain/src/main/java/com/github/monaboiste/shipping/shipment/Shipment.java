@@ -8,7 +8,7 @@ import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.error.DomainException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentSnapshot;
+import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
 import com.github.monaboiste.shipping.shipment.event.ShipmentVoided;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,7 +24,7 @@ import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.E
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_RECEIVER;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_SENDER;
 
-public class Shipment extends AggregateRoot<ShipmentId, ShipmentSnapshot> {
+public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
 
     private final ShipmentId id;
     private Party sender;

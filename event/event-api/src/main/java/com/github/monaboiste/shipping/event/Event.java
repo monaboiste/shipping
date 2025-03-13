@@ -3,7 +3,7 @@ package com.github.monaboiste.shipping.event;
 import java.io.Serializable;
 import java.time.Instant;
 
-public interface Event<S extends Snapshot> extends Serializable {
+public interface Event<S extends Payload> extends Serializable {
 
     /**
      * @return event identifier

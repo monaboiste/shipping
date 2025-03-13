@@ -3,13 +3,13 @@ package com.github.monaboiste.shipping.event;
 import java.util.List;
 import java.util.function.Consumer;
 
-public record BatchEvent<S extends Snapshot>(List<Event<S>> events) {
+public record BatchEvent<P extends Payload>(List<Event<P>> events) {
 
-    public void forEach(Consumer<Event<S>> action) {
+    public void forEach(Consumer<Event<P>> action) {
         events.forEach(action);
     }
 
-    public List<Event<S>> events() {
+    public List<Event<P>> events() {
         return events;
     }
 }
