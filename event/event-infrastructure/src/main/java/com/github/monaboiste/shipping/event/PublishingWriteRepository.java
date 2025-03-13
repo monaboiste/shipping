@@ -49,7 +49,7 @@ public class PublishingWriteRepository<
      *
      * @param events events to publish
      */
-    private void publish(List<Event<P>> events) {
+    private void publish(List<DomainEvent<P>> events) {
         eventPublisher.publish(new BatchEvent<>(events));
         events.forEach(eventPublisher::publish);
     }

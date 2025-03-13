@@ -1,7 +1,6 @@
 package com.github.monaboiste.shipping.shipment.event;
 
 import com.github.monaboiste.shipping.event.DomainEvent;
-import com.github.monaboiste.shipping.event.Event;
 import com.github.monaboiste.shipping.shipment.Shipment;
 
 import java.time.Instant;
@@ -11,13 +10,13 @@ public class ShipmentAllocated implements DomainEvent<ShipmentPayload> {
     private final String eventId;
     private final Instant occurredAt;
     private final String aggregateId;
-    private final ShipmentPayload payload;
+    private final ShipmentAllocatedPayload payload;
 
     public ShipmentAllocated(Shipment shipment) {
         this.eventId = UUID.randomUUID().toString();
         this.occurredAt = Instant.now();
         this.aggregateId = shipment.id().value();
-        this.payload = new ShipmentPayload(shipment);
+        this.payload = new ShipmentAllocatedPayload(shipment);
     }
 
     @Override
@@ -26,7 +25,7 @@ public class ShipmentAllocated implements DomainEvent<ShipmentPayload> {
     }
 
     @Override
-    public Class<? extends Event<ShipmentPayload>> type() {
+    public Class<? extends DomainEvent<ShipmentPayload>> type() {
         return ShipmentAllocated.class;
     }
 
@@ -46,7 +45,7 @@ public class ShipmentAllocated implements DomainEvent<ShipmentPayload> {
     }
 
     @Override
-    public ShipmentPayload payload() {
+    public ShipmentAllocatedPayload payload() {
         return payload;
     }
 }

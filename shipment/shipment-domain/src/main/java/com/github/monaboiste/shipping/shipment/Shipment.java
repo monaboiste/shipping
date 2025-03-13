@@ -7,9 +7,9 @@ import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.error.DomainException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
+import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
-import com.github.monaboiste.shipping.shipment.event.ShipmentVoided;
+import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
@@ -86,8 +86,9 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
             throw new DomainException(CANNOT_REALLOCATE_NOT_ALLOCATED,
                     "The shipment cannot be reallocated as it is not allocated.");
         }
+        var previousThisState = this;
         allocationContext = new AllocationContext(carrierServiceId);
-        appendEvent(new ShipmentReallocated(this));
+        appendEvent(new ShipmentReallocated(this, previousThisState));
     }
 
     public void deallocate() {
@@ -96,7 +97,7 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
                     "The shipment cannot be deallocated as it has been already manifested.");
         }
         allocationContext = null;
-        appendEvent(new ShipmentVoided(this));
+        appendEvent(new ShipmentDeallocated(this));
     }
 
     @Override
