@@ -5,13 +5,16 @@ import com.github.monaboiste.shipping.CarrierServiceId;
 import com.github.monaboiste.shipping.Party;
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
+import com.github.monaboiste.shipping.event.DomainEvent;
 import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
+import com.github.monaboiste.shipping.shipment.usecase.CreateShipment;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
@@ -32,6 +35,31 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
     private ShipmentStatus status;
 
     private AllocationContext allocationContext;
+
+    /**
+     * Rehydrate {@code Shipment} from the event history.
+     */
+    static Shipment recreate(ShipmentId shipmentId, String version, List<DomainEvent<ShipmentPayload>> events) {
+        return new Shipment(shipmentId, version, events);
+    }
+
+    private Shipment(ShipmentId id, String version, List<DomainEvent<ShipmentPayload>> events) {
+        super(Integer.parseInt(version));
+        this.id = id;
+        events.forEach(this::apply);
+    }
+
+    private void apply(DomainEvent<ShipmentPayload> event) {
+        if (event instanceof CreateShipment) {
+
+        } else if (event instanceof ShipmentAllocated) {
+
+        } else if (event instanceof ShipmentReallocated) {
+
+        } else if (event instanceof ShipmentDeallocated) {
+            
+        }
+    }
 
     /**
      * The constructor introduces the side effects - it should NOT be used

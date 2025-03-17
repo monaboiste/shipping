@@ -1,0 +1,26 @@
+plugins {
+    id("java-conventions")
+    id("spring-boot-library-conventions")
+    id("logging-conventions")
+
+    id("groovy-testing-conventions")
+
+    id("java-publishing-conventions")
+    id("java-lint-conventions")
+    id("java-formatting-conventions")
+    id("dependency-analysis-conventions")
+}
+
+dependencies {
+    implementation project(":shared")
+    implementation project(":event:event-api")
+    implementation project(":event:event-infrastructure")
+    implementation project(":shipment:shipment-domain")
+
+    implementation("org.springframework.boot:spring-boot-starter-jdbc")
+
+    compileOnly(libs.lombok)
+    annotationProcessor(libs.lombok)
+    testCompileOnly(libs.lombok)
+    testAnnotationProcessor(libs.lombok)
+}

@@ -15,3 +15,4 @@ include(":event:event-infrastructure")
 
 include(":shipment:shipment-domain")
 include(":shipment:shipment-application")
+include(":shipment:shipment-infrastructure")

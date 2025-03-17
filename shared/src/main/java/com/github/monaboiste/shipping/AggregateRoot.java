@@ -10,8 +10,17 @@ import java.util.List;
 @SuppressWarnings("squid:S119")
 public abstract class AggregateRoot<ID, P extends Payload> {
 
-    private final List<DomainEvent<P>> pendingEvents = new ArrayList<>();
+    private final List<DomainEvent<P>> pendingEvents;
     private int version;
+
+    protected AggregateRoot() {
+        this.pendingEvents = new ArrayList<>();
+    }
+
+    protected AggregateRoot(int version) {
+        this.pendingEvents = new ArrayList<>();
+        this.version = version;
+    }
 
     protected void appendEvent(DomainEvent<P> event) {
         if (event == null) {
