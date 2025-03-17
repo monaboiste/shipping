@@ -1,15 +1,17 @@
 package com.github.monaboiste.shipping.shipment.usecase;
 
+import com.github.monaboiste.shipping.error.AlreadyExistsException;
 import com.github.monaboiste.shipping.shipment.Shipment;
-import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.shipment.ShipmentReadRepository;
 import com.github.monaboiste.shipping.shipment.ShipmentWriteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
 
+import static com.github.monaboiste.shipping.shipment.error.ShipmentApplicationErrorCodes.SHIPMENT_ALREADY_EXISTS;
+
 @RequiredArgsConstructor
-class DeallocationService implements DeallocateShipment {
+class CreateShipmentHandler implements CreateShipment {
 
     private final PlatformTransactionManager transactionManager;
 
@@ -17,13 +19,14 @@ class DeallocationService implements DeallocateShipment {
     private final ShipmentWriteRepository shipmentWriteRepository;
 
     @Override
-    public void deallocate(ShipmentId shipmentId) {
-        TransactionTemplate tx = new TransactionTemplate(transactionManager);
+    public void create(Shipment shipment) {
+        var tx = new TransactionTemplate(transactionManager);
         tx.executeWithoutResult(_ -> {
-            Shipment shipment = shipmentReadRepository.findById(shipmentId)
-                    .orElseThrow();
-            shipment.deallocate();
-
+            boolean alreadyExists = shipmentReadRepository.existsById(shipment.id());
+            if (alreadyExists) {
+                throw new AlreadyExistsException(SHIPMENT_ALREADY_EXISTS,
+                        "Shipment %s cannot be created as it already exists.".formatted(shipment.id()));
+            }
             shipmentWriteRepository.save(shipment);
         });
     }

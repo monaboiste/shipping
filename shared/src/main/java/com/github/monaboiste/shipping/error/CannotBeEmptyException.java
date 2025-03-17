@@ -1,6 +1,6 @@
 package com.github.monaboiste.shipping.error;
 
-public class CannotBeEmptyException extends DomainException {
+public class CannotBeEmptyException extends TranslatableDomainException {
 
     public CannotBeEmptyException(String errorKey) {
         super(errorKey, "");

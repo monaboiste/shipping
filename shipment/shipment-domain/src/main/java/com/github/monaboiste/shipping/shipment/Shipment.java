@@ -5,12 +5,12 @@ import com.github.monaboiste.shipping.CarrierServiceId;
 import com.github.monaboiste.shipping.Party;
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
-import com.github.monaboiste.shipping.error.DomainException;
+import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
+import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
@@ -33,6 +33,10 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
 
     private AllocationContext allocationContext;
 
+    /**
+     * The constructor introduces the side effects - it should NOT be used
+     * for the rehydration.
+     */
     public Shipment(ShipmentId id, Party sender, Party receiver) {
         if (id == null) {
             throw new CannotBeEmptyException(EMPTY_SHIPMENT_ID);
@@ -49,22 +53,8 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
         this.receiver = receiver;
         this.status = PENDING;
         this.allocationContext = null;
-    }
 
-    /**
-     * Rehydrated shipment object.
-     * TODO: switch to flexible constructor if/when JEP 482 feature is released.
-     */
-    Shipment(ShipmentId id,
-             Party sender,
-             Party receiver,
-             ShipmentStatus status,
-             @Nullable AllocationContext allocationContext) {
-        this.id = id;
-        this.sender = sender;
-        this.receiver = receiver;
-        this.status = status;
-        this.allocationContext = allocationContext;
+        appendEvent(new ShipmentCreated(this));
     }
 
     public boolean isAllocated() {
@@ -73,7 +63,7 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
 
     public void allocate(CarrierServiceId carrierServiceId) {
         if (status.after(ALLOCATED)) {
-            throw new DomainException(CANNOT_ALLOCATE_ALLOCATED,
+            throw new ShipmentStatusException(CANNOT_ALLOCATE_ALLOCATED,
                     "The shipment cannot be allocated as it's %s.".formatted(status));
         }
         status = ALLOCATED;
@@ -83,7 +73,7 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
 
     public void reallocate(CarrierServiceId carrierServiceId) {
         if (!status.equals(ALLOCATED)) {
-            throw new DomainException(CANNOT_REALLOCATE_NOT_ALLOCATED,
+            throw new ShipmentStatusException(CANNOT_REALLOCATE_NOT_ALLOCATED,
                     "The shipment cannot be reallocated as it is not allocated.");
         }
         var previousThisState = this;
@@ -93,7 +83,7 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
 
     public void deallocate() {
         if (status.afterOrEqual(MANIFESTED)) {
-            throw new DomainException(CANNOT_DEALLOCATE_MANIFESTED,
+            throw new ShipmentStatusException(CANNOT_DEALLOCATE_MANIFESTED,
                     "The shipment cannot be deallocated as it has been already manifested.");
         }
         allocationContext = null;
