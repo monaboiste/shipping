@@ -4,7 +4,42 @@ tbc
 
 # Architecture Decision Record
 
-tbc
+_(draft)_ Using the same database for the event store and a read model. 
+The variant _could_ be used for independent event store and other cases than updating read model - 
+if we don't need at-least-once delivery.
+
+```
+             +---------+                  +-----------------+                                           +------------+     
+    command  |         |  state mutation  |                 | persist                                   |            |     
+    ---------> Handler -------------------> EventRepository --------------------------------------------> EventStore |     
+             |         |                  |                 |                                           |            |     
+             +---------+                  +----|------------+                                           +------------+     
+                                               |                                                                           
+                                               |                                                                           
+                                           +---v------------+    +-----------------------------+        +-----------------+
+                                           |                |    |                             | update |                 |
+                                           | EventPublisher -----> @TransactionalEventListener |--------> QueryRepository |
+                                           |                |    | ProjectionSynchronizer      |        |                 |
+                                           +----------------+    |                             |        +-----------------+
+                                                                 +-----------------------------+                           
+```
+
+_(draft)_ Using dedicated, independent event store with Change Data Capture.
+
+```
+             +---------+                  +-----------------+         +------------+                                 
+    command  |         |  state mutation  |                 | persist |            |                                 
+    ---------> Handler -------------------> EventRepository ----------> EventStore |                                 
+             |         |                  |                 |         |            |                                 
+             +---------+                  +-----------------+         +-----|------+                                 
+                                                                            | CDC                                    
+                                                                            |                                        
+                                                                 +----------v-------------+       +-----------------+
+                                                                 |                        |update |                 |
+                                                                 | ProjectionSynchronizer --------> QueryRepository |
+                                                                 |                        |       |                 |
+                                                                 +------------------------+       +-----------------+
+```
 
 # Project
 
@@ -12,9 +47,11 @@ The project uses pre-compiled convention plugins. Sometimes Gradle does not dete
 in the plugin. When you make any modifications to the gradle scripts, make sure to run `./gradlew clean`
 
 _Note: if you're having issues with IntelliJ, try generating IDE metadata:_
+
 ```shell
 ./gradlew cleanIdea idea
 ```
+
 _and then, reimport the project into IntelliJ._
 
 ## Conventions
@@ -61,7 +98,9 @@ _and then, reimport the project into IntelliJ._
 tbc
 
 # Contribution
+
 Before you commit copy all hooks into `.git` directory:
+
 ```shell
 cp ./hooks/* .git/hooks/
 ```
