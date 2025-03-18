@@ -6,10 +6,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+/**
+ * Built-in Java based serializer.
+ * <p>
+ * Cons:
+ * <li>
+ * <ul>very slow - for better performance consider using different method of serialization, e.g. Protobuf</ul>
+ * <ul>large binary output (writes metadata)</ul>
+ * <ul>not cross-platform</ul>
+ * <ul>requires objects to implement {@link java.io.Serializable}</ul>
+ * </li>
+ */
 public class JavaEventSerializer implements EventSerializer {
 
     @Override
-    public byte[] serialize(DomainEvent<?> event) {
+    public <E extends DomainEvent<?>> byte[] serialize(E event) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
              ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeObject(event);
@@ -21,11 +32,9 @@ public class JavaEventSerializer implements EventSerializer {
     }
 
     @Override
-    public <P extends Payload> DomainEvent<P> deserialize(byte[] content, Class<P> eventType) {
+    public <E extends DomainEvent<?>> E deserialize(byte[] content, Class<E> eventType) {
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(content))) {
-            @SuppressWarnings("unchecked")
-            var event = (DomainEvent<P>) ois.readObject();
-            return event;
+            return eventType.cast(ois.readObject());
         } catch (Exception ex) {
             throw new IllegalArgumentException("Cannot deserialize event", ex);
         }

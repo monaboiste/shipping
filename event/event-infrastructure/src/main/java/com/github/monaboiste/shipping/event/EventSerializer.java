@@ -2,7 +2,7 @@ package com.github.monaboiste.shipping.event;
 
 public interface EventSerializer {
 
-    byte[] serialize(DomainEvent<?> event);
+    <E extends DomainEvent<?>> byte[] serialize(E event);
 
-    <P extends Payload> DomainEvent<P> deserialize(byte[] content, Class<P> eventType);
+    <E extends DomainEvent<?>> E deserialize(byte[] content, Class<E> eventType);
 }
