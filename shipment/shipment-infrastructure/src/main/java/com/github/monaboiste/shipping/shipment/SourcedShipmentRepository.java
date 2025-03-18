@@ -2,9 +2,8 @@ package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.event.BatchEvent;
-import com.github.monaboiste.shipping.event.DomainEvent;
 import com.github.monaboiste.shipping.event.EventPublisher;
-import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
+import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
@@ -16,7 +15,7 @@ import java.util.Optional;
 class SourcedShipmentRepository implements ShipmentReadRepository, ShipmentWriteRepository {
 
     private final ShipmentEventStreamRepository streamRepository;
-    private final EventPublisher<ShipmentPayload> eventPublisher;
+    private final EventPublisher eventPublisher;
 
     @Override
     public Optional<Shipment> findById(ShipmentId id) {
@@ -44,10 +43,10 @@ class SourcedShipmentRepository implements ShipmentReadRepository, ShipmentWrite
             // throw new OptimisticLockException(); todo
         }
 
-        List<DomainEvent<ShipmentPayload>> flushedPendingEvents = shipment.flushPendingEvents();
-        stream.append(flushedPendingEvents);
+        List<ShipmentEvent> events = shipment.flushPendingEvents();
+        stream.append(events);
         streamRepository.save(stream);
 
-        eventPublisher.publish(new BatchEvent<>(flushedPendingEvents));
+        eventPublisher.publish(new BatchEvent<>(events));
     }
 }

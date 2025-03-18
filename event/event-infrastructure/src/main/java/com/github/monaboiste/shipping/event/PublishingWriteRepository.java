@@ -23,14 +23,14 @@ import java.util.List;
 @SuppressWarnings("squid:S119")
 public class PublishingWriteRepository<
         ID,
-        T extends AggregateRoot<ID, P>,
-        P extends Payload
+        T extends AggregateRoot<ID, E>,
+        E extends DomainEvent<? extends Payload>
         > implements WriteRepository<ID, T> {
 
-    private final EventPublisher<P> eventPublisher;
+    private final EventPublisher eventPublisher;
     private final WriteRepository<ID, T> delegate;
 
-    public PublishingWriteRepository(EventPublisher<P> eventPublisher,
+    public PublishingWriteRepository(EventPublisher eventPublisher,
                                      WriteRepository<ID, T> delegate) {
         this.eventPublisher = eventPublisher;
         this.delegate = delegate;
@@ -49,7 +49,7 @@ public class PublishingWriteRepository<
      *
      * @param events events to publish
      */
-    private void publish(List<DomainEvent<P>> events) {
+    private void publish(List<E> events) {
         eventPublisher.publish(new BatchEvent<>(events));
         events.forEach(eventPublisher::publish);
     }

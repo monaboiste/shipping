@@ -5,12 +5,11 @@ import com.github.monaboiste.shipping.CarrierServiceId;
 import com.github.monaboiste.shipping.Party;
 import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
-import com.github.monaboiste.shipping.event.DomainEvent;
 import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
+import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
 import com.github.monaboiste.shipping.shipment.usecase.CreateShipment;
 
@@ -27,7 +26,7 @@ import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.E
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_RECEIVER;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_SENDER;
 
-public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
+public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
 
     private final ShipmentId id;
     private Party sender;
@@ -39,17 +38,17 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentPayload> {
     /**
      * Rehydrate {@code Shipment} from the event history.
      */
-    static Shipment recreate(ShipmentId shipmentId, String version, List<DomainEvent<ShipmentPayload>> events) {
+    static Shipment recreate(ShipmentId shipmentId, String version, List<ShipmentEvent> events) {
         return new Shipment(shipmentId, version, events);
     }
 
-    private Shipment(ShipmentId id, String version, List<DomainEvent<ShipmentPayload>> events) {
+    private Shipment(ShipmentId id, String version, List<ShipmentEvent> events) {
         super(Integer.parseInt(version));
         this.id = id;
         events.forEach(this::apply);
     }
 
-    private void apply(DomainEvent<ShipmentPayload> event) {
+    private void apply(ShipmentEvent event) {
         if (event instanceof CreateShipment) {
 
         } else if (event instanceof ShipmentAllocated) {

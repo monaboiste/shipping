@@ -1,16 +1,16 @@
 package com.github.monaboiste.shipping;
 
 import com.github.monaboiste.shipping.event.DomainEvent;
-import com.github.monaboiste.shipping.event.Payload;
 import org.jetbrains.annotations.UnmodifiableView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("squid:S119")
-public abstract class AggregateRoot<ID, P extends Payload> {
+public abstract class AggregateRoot<ID, E extends DomainEvent<?>> {
 
-    private final List<DomainEvent<P>> pendingEvents;
+    // TODO: needs refinement session: domain (incoming, to-be-commited) vs integration (outgoing, commited) events
+    private final List<E> pendingEvents;
     private int version;
 
     protected AggregateRoot() {
@@ -22,7 +22,7 @@ public abstract class AggregateRoot<ID, P extends Payload> {
         this.version = version;
     }
 
-    protected void appendEvent(DomainEvent<P> event) {
+    protected void appendEvent(E event) {
         if (event == null) {
             throw new IllegalArgumentException();
         }
@@ -50,7 +50,7 @@ public abstract class AggregateRoot<ID, P extends Payload> {
      *
      * @return a collection of the pending events (commited changes).
      */
-    public List<DomainEvent<P>> flushPendingEvents() {
+    public List<E> flushPendingEvents() {
         incrementVersion();
         var returned = new ArrayList<>(pendingEvents);
         pendingEvents.clear();
@@ -67,7 +67,7 @@ public abstract class AggregateRoot<ID, P extends Payload> {
      * @return a collection of the pending events.
      */
     @UnmodifiableView
-    public List<DomainEvent<P>> peekPendingEvents() {
+    public List<E> peekPendingEvents() {
         return List.copyOf(pendingEvents);
     }
 }

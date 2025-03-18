@@ -1,8 +1,8 @@
 package com.github.monaboiste.shipping.event;
 
-public interface EventPublisher<P extends Payload> {
+public interface EventPublisher {
 
-    void publish(DomainEvent<P> events);
+    <E extends DomainEvent<? extends Payload>> void publish(E event);
 
-    void publish(BatchEvent<P> events);
+    <E extends DomainEvent<? extends Payload>> void publish(BatchEvent<E> events);
 }

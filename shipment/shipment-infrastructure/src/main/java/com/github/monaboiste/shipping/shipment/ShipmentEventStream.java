@@ -1,25 +1,24 @@
 package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.ShipmentId;
-import com.github.monaboiste.shipping.event.DomainEvent;
-import com.github.monaboiste.shipping.shipment.event.ShipmentPayload;
+import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 
 import java.util.List;
 
 class ShipmentEventStream {
 
     private final ShipmentId shipmentId;
-    private final List<DomainEvent<ShipmentPayload>> events;
+    private final List<ShipmentEvent> events;
 
     private int version;
 
-    ShipmentEventStream(ShipmentId shipmentId, List<DomainEvent<ShipmentPayload>> events) {
+    ShipmentEventStream(ShipmentId shipmentId, List<ShipmentEvent> events) {
         this.shipmentId = shipmentId;
         this.events = events;
     }
 
     ShipmentEventStream(ShipmentId shipmentId,
-                        List<DomainEvent<ShipmentPayload>> events,
+                        List<ShipmentEvent> events,
                         int version) {
         this.shipmentId = shipmentId;
         this.events = events;
@@ -30,7 +29,7 @@ class ShipmentEventStream {
         return shipmentId;
     }
 
-    List<DomainEvent<ShipmentPayload>> events() {
+    List<ShipmentEvent> events() {
         return events;
     }
 
@@ -42,7 +41,7 @@ class ShipmentEventStream {
         version++;
     }
 
-    void append(List<DomainEvent<ShipmentPayload>> events) {
+    void append(List<ShipmentEvent> events) {
         this.events.addAll(events);
     }
 }

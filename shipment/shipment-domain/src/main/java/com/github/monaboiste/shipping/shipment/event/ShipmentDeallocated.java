@@ -6,7 +6,7 @@ import com.github.monaboiste.shipping.shipment.Shipment;
 import java.time.Instant;
 import java.util.UUID;
 
-public class ShipmentDeallocated implements DomainEvent<ShipmentPayload> {
+public class ShipmentDeallocated implements ShipmentEvent {
     private final String eventId;
     private final Instant occurredAt;
     private final String aggregateId;
