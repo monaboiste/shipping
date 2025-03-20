@@ -2,23 +2,17 @@ package com.github.monaboiste.shipping.shipment.event;
 
 import com.github.monaboiste.shipping.shipment.Shipment;
 
-public class ShipmentReallocatedPayload implements ShipmentPayload {
-    private final String shipmentId;
-    private final AllocationPayload allocation;
-    private final AllocationPayload previousAllocation;
+public record ShipmentReallocatedPayload(
+        String shipmentId,
+        AllocationPayload allocation,
+        AllocationPayload previousAllocation
+) implements ShipmentPayload {
 
     public ShipmentReallocatedPayload(Shipment shipment, Shipment previousShipment) {
-        this.shipmentId = shipment.id().value();
-        this.allocation = shipment.getAllocation()
-                .map(AllocationPayload::new)
-                .orElse(null);
-        this.previousAllocation = previousShipment.getAllocation()
-                .map(AllocationPayload::new)
-                .orElse(null);
-    }
-
-    @Override
-    public String shipmentId() {
-        return shipmentId;
+        this(
+                shipment.id().value(),
+                shipment.getAllocation().map(AllocationPayload::new).orElse(null),
+                previousShipment.getAllocation().map(AllocationPayload::new).orElse(null)
+        );
     }
 }

@@ -25,4 +25,16 @@ public abstract class Party {
         this.name = name;
         this.address = address;
     }
+
+    public PartyId id() {
+        return id;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public StructuredAddress address() {
+        return address;
+    }
 }

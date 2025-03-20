@@ -5,12 +5,15 @@ import com.github.monaboiste.shipping.shipment.AllocationContext;
 
 import java.time.OffsetDateTime;
 
-public class AllocationPayload implements Payload {
-    private final String carrierServiceId;
-    private final OffsetDateTime allocatedAt;
+public record AllocationPayload(
+        String carrierServiceId,
+        OffsetDateTime allocatedAt
+) implements Payload {
 
     public AllocationPayload(AllocationContext allocationContext) {
-        this.carrierServiceId = allocationContext.carrierServiceId().value();
-        this.allocatedAt = allocationContext.allocatedAt();
+        this(
+                allocationContext.carrierServiceId().value(),
+                allocationContext.allocatedAt()
+        );
     }
 }
