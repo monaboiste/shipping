@@ -17,4 +17,8 @@ public class Company extends Party {
         super(partyId, companyName, address);
         this.phoneNumber = phoneNumber;
     }
+
+    public PhoneNumber phoneNumber() {
+        return phoneNumber;
+    }
 }
