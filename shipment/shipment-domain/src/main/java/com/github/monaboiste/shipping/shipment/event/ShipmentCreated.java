@@ -20,6 +20,11 @@ public class ShipmentCreated implements ShipmentEvent {
     }
 
     @Override
+    public void accept(ShipmentEventVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public String eventId() {
         return eventId;
     }

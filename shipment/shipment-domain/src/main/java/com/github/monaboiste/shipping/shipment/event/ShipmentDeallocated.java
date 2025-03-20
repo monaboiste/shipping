@@ -20,6 +20,11 @@ public class ShipmentDeallocated implements ShipmentEvent {
     }
 
     @Override
+    public void accept(ShipmentEventVisitor visitor) {
+        visitor.visit(this);
+    }
+
+    @Override
     public String aggregateId() {
         return aggregateId;
     }

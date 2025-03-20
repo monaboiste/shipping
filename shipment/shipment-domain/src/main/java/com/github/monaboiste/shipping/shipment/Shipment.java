@@ -10,8 +10,8 @@ import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
+import com.github.monaboiste.shipping.shipment.event.ShipmentEventVisitor;
 import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
-import com.github.monaboiste.shipping.shipment.usecase.CreateShipment;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.E
 
 public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
 
-    private final ShipmentId id;
+    private ShipmentId id;
     private Party sender;
     private Party receiver;
     private ShipmentStatus status;
@@ -46,18 +46,6 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
         super(Integer.parseInt(version));
         this.id = id;
         events.forEach(this::apply);
-    }
-
-    private void apply(ShipmentEvent event) {
-        if (event instanceof CreateShipment) {
-
-        } else if (event instanceof ShipmentAllocated) {
-
-        } else if (event instanceof ShipmentReallocated) {
-
-        } else if (event instanceof ShipmentDeallocated) {
-            
-        }
     }
 
     /**
@@ -132,5 +120,46 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
 
     public Optional<AllocationContext> getAllocation() {
         return Optional.ofNullable(allocationContext);
+    }
+
+    private void apply(ShipmentEvent event) {
+        event.accept(new ShipmentEventVisitor() {
+
+            @Override
+            public void visit(ShipmentCreated event) {
+                applyShipmentCreated(event);
+            }
+
+            @Override
+            public void visit(ShipmentAllocated event) {
+                applyShipmentAllocated(event);
+            }
+
+            @Override
+            public void visit(ShipmentReallocated event) {
+                applyShipmentReallocated(event);
+            }
+
+            @Override
+            public void visit(ShipmentDeallocated event) {
+                applyShipmentDeallocated(event);
+            }
+        });
+    }
+
+    private void applyShipmentCreated(ShipmentCreated event) {
+
+    }
+
+    private void applyShipmentAllocated(ShipmentAllocated event) {
+
+    }
+
+    private void applyShipmentReallocated(ShipmentReallocated event) {
+
+    }
+
+    private void applyShipmentDeallocated(ShipmentDeallocated event) {
+
     }
 }

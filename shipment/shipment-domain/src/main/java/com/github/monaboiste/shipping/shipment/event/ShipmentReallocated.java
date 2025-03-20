@@ -20,13 +20,8 @@ public class ShipmentReallocated implements ShipmentEvent {
     }
 
     @Override
-    public String aggregateId() {
-        return aggregateId;
-    }
-
-    @Override
-    public Class<? extends DomainEvent<ShipmentPayload>> type() {
-        return ShipmentReallocated.class;
+    public void accept(ShipmentEventVisitor visitor) {
+        visitor.visit(this);
     }
 
     @Override
@@ -47,5 +42,15 @@ public class ShipmentReallocated implements ShipmentEvent {
     @Override
     public ShipmentReallocatedPayload payload() {
         return payload;
+    }
+
+    @Override
+    public String aggregateId() {
+        return aggregateId;
+    }
+
+    @Override
+    public Class<? extends DomainEvent<ShipmentPayload>> type() {
+        return ShipmentReallocated.class;
     }
 }
