@@ -4,5 +4,10 @@ import com.github.monaboiste.shipping.ShipmentId;
 
 public interface DeallocateShipment {
 
+    /**
+     * Cancels the allocation of the shipment.
+     *
+     * @param shipmentId shipment identifier
+     */
     void deallocate(ShipmentId shipmentId);
 }
