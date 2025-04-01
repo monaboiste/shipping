@@ -20,7 +20,7 @@ import java.io.ObjectOutputStream;
 public class JavaEventSerializer implements EventSerializer {
 
     @Override
-    public <E extends DomainEvent<?>> byte[] serialize(E event) {
+    public <E extends Event<?>> byte[] serialize(E event) {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
              ObjectOutputStream oos = new ObjectOutputStream(baos)) {
             oos.writeObject(event);
@@ -33,7 +33,7 @@ public class JavaEventSerializer implements EventSerializer {
     }
 
     @Override
-    public <E extends DomainEvent<?>> E deserialize(byte[] content, Class<E> eventType) {
+    public <E extends Event<?>> E deserialize(byte[] content, Class<E> eventType) {
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(content))) {
             return eventType.cast(ois.readObject());
         } catch (Exception ex) {

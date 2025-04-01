@@ -12,7 +12,7 @@ dependencies {
 }
 
 tasks.bootJar {
-    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    duplicatesStrategy = DuplicatesStrategy.WARN
 }
 
 /*

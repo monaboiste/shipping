@@ -53,7 +53,7 @@ class SourcedShipmentRepository implements ShipmentReadRepository, ShipmentWrite
             // throw new OptimisticLockException(); todo
         }
 
-        List<ShipmentEvent> events = shipment.flushPendingEvents();
+        var events = shipment.flushPendingIncomingEvents();
         stream.append(events);
         streamRepository.save(stream);
 

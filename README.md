@@ -113,9 +113,9 @@ Incoming vs outgoing events:
 
 Revisiting Allocate scenario:
 
-| Step                    | Action                                               | Transaction?                       | Event(s) Emitted                                                            |
-|-------------------------|------------------------------------------------------|------------------------------------|-----------------------------------------------------------------------------|
-| Allocate Shipment       | Client calls POST /shipments/{id}/allocate           | Yes (DB commit)                    | ShipmentAllocationRequested (incoming)                                      |
-| Validate Allocation     | System checks business rules                         | No (part of the same TX)           | -                                                                           |
-| Call Carrier API        | System requests shipping label                       | No (external call, not part of TX) | -                                                                           |
-| Handle Carrier Response | System updates shipment status based on API response | Yes (DB commit)                    | ShipmentAllocated (Success) / ShipmentAllocationFailed (Failure) (outgoing) |
+| Step                    | Action                                               | Transaction?                       | Event(s) Emitted                                                                         |
+|-------------------------|------------------------------------------------------|------------------------------------|------------------------------------------------------------------------------------------|
+| Allocate Shipment       | Client calls POST /shipments/{id}/allocate           | Yes (DB commit)                    | ShipmentAllocationRequested (incoming)                                                   |
+| Validate Allocation     | System checks business rules                         | No (part of the same TX)           | -                                                                                        |
+| Call Carrier API        | System requests shipping label                       | No (external call, not part of TX) | -                                                                                        |
+| Handle Carrier Response | System updates shipment status based on API response | Yes (DB commit)                    | ShipmentAllocated (Success) / ShipmentAllocationFailed (Failure) (incoming and outgoing) |

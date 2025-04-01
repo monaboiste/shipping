@@ -2,7 +2,6 @@ package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.AggregateRoot;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
-import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
@@ -13,7 +12,6 @@ import java.util.Optional;
 
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.PENDING;
-import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_ALLOCATE_ALLOCATED;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_ID;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_RECEIVER;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_SENDER;
@@ -30,12 +28,12 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
     /**
      * Rehydrate {@code Shipment} from the event history.
      */
-    static Shipment recreate(ShipmentId shipmentId, String version, List<ShipmentEvent> events) {
+    static Shipment recreate(ShipmentId shipmentId, int version, List<ShipmentEvent> events) {
         return new Shipment(shipmentId, version, events);
     }
 
-    private Shipment(ShipmentId id, String version, List<ShipmentEvent> events) {
-        super(Integer.parseInt(version));
+    private Shipment(ShipmentId id, int version, List<ShipmentEvent> events) {
+        super(version);
         this.id = id;
         events.forEach(this::apply);
     }
@@ -61,17 +59,14 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
         this.status = PENDING;
         this.allocationContext = null;
 
-        appendEvent(new ShipmentCreated(this));
+        appendIncoming(new ShipmentCreated(this));
     }
 
     public void allocate(CarrierServiceId carrierServiceId) {
-        if (status.after(ALLOCATED)) {
-            throw new ShipmentStatusException(CANNOT_ALLOCATE_ALLOCATED,
-                    "The shipment cannot be allocated as it's %s.".formatted(status));
-        }
         status = ALLOCATED;
         allocationContext = new AllocationContext(carrierServiceId);
-        appendEvent(new ShipmentAllocated(this));
+        appendIncoming(new ShipmentAllocated(this));
+        appendOutgoing(new ShipmentAllocated(this));
     }
 
     @Override

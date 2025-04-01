@@ -27,7 +27,7 @@ import java.util.List;
 public class PublishingWriteRepository<
         ID,
         T extends AggregateRoot<ID, E>,
-        E extends DomainEvent<? extends Payload>
+        E extends Event<? extends Payload>
         > implements WriteRepository<ID, T> {
 
     private final EventPublisher eventPublisher;
@@ -41,7 +41,7 @@ public class PublishingWriteRepository<
 
     @Override
     public void save(T t) {
-        var events = t.flushPendingEvents();
+        var events = t.flushPendingIncomingEvents();
         delegate.save(t);
 
         publish(events);
