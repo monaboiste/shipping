@@ -2,6 +2,7 @@ package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 
 class ShipmentEventStream {
@@ -11,9 +12,9 @@ class ShipmentEventStream {
 
     private int version;
 
-    ShipmentEventStream(ShipmentId shipmentId, List<ShipmentEvent> events) {
+    ShipmentEventStream(ShipmentId shipmentId) {
         this.shipmentId = shipmentId;
-        this.events = events;
+        this.events = new ArrayList<>();
     }
 
     ShipmentEventStream(ShipmentId shipmentId,

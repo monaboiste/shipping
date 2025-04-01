@@ -19,8 +19,11 @@ import java.util.List;
  * or manual transaction management to control when events are handled: either within the same transaction
  * (e.g., {@code BEFORE_COMMIT}) or outside of it. Avoid mixing database operations with external TCP calls
  * within a single transaction.
+ *
+ * @deprecated Switch to event sourcing methodology.
  */
 @SuppressWarnings("squid:S119")
+@Deprecated(forRemoval = true)
 public class PublishingWriteRepository<
         ID,
         T extends AggregateRoot<ID, E>,
