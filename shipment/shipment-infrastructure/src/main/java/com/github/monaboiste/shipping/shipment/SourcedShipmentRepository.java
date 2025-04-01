@@ -1,6 +1,5 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.event.BatchEvent;
 import com.github.monaboiste.shipping.event.EventPublisher;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
@@ -21,11 +20,6 @@ class SourcedShipmentRepository implements ShipmentReadRepository, ShipmentWrite
     public Optional<Shipment> findById(ShipmentId id) {
         return streamRepository.findById(id)
                 .map(this::rehydrate);
-    }
-
-    @Override
-    public boolean existsById(ShipmentId id) {
-        return streamRepository.existsById(id);
     }
 
     private Shipment rehydrate(ShipmentEventStream stream) {

@@ -1,7 +1,5 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.ShipmentId;
-
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;

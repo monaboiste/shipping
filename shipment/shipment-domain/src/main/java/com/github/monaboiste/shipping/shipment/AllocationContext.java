@@ -1,7 +1,5 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.CarrierServiceId;
-
 import java.time.OffsetDateTime;
 
 public class AllocationContext {

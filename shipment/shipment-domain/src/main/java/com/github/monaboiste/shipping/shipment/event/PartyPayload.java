@@ -1,6 +1,6 @@
 package com.github.monaboiste.shipping.shipment.event;
 
-import com.github.monaboiste.shipping.Party;
+import com.github.monaboiste.shipping.shipment.Party;
 import com.github.monaboiste.shipping.event.Payload;
 import com.github.monaboiste.shipping.shipment.Company;
 import com.github.monaboiste.shipping.shipment.NaturalPerson;

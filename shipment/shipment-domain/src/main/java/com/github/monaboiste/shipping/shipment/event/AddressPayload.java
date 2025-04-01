@@ -1,6 +1,6 @@
 package com.github.monaboiste.shipping.shipment.event;
 
-import com.github.monaboiste.shipping.StructuredAddress;
+import com.github.monaboiste.shipping.shipment.StructuredAddress;
 import com.github.monaboiste.shipping.event.Payload;
 
 public record AddressPayload(

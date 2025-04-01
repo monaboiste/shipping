@@ -1,6 +1,6 @@
 package com.github.monaboiste.shipping.shipment.usecase;
 
-import com.github.monaboiste.shipping.ShipmentId;
+import com.github.monaboiste.shipping.shipment.ShipmentId;
 
 public interface DeallocateShipment {
 

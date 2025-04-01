@@ -1,4 +1,4 @@
-package com.github.monaboiste.shipping;
+package com.github.monaboiste.shipping.shipment;
 
 /**
  * @param twoLetterCode ISO 3166-1 alpha-2 country code

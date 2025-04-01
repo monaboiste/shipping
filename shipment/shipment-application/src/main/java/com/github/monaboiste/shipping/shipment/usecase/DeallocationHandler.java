@@ -2,7 +2,7 @@ package com.github.monaboiste.shipping.shipment.usecase;
 
 import com.github.monaboiste.shipping.error.NotFoundException;
 import com.github.monaboiste.shipping.shipment.Shipment;
-import com.github.monaboiste.shipping.ShipmentId;
+import com.github.monaboiste.shipping.shipment.ShipmentId;
 import com.github.monaboiste.shipping.shipment.ShipmentReadRepository;
 import com.github.monaboiste.shipping.shipment.ShipmentWriteRepository;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,5 @@
 package com.github.monaboiste.shipping.shipment;
 
-import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 
 import java.util.List;

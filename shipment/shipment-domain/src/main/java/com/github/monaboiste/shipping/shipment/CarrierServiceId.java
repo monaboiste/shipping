@@ -1,4 +1,4 @@
-package com.github.monaboiste.shipping;
+package com.github.monaboiste.shipping.shipment;
 
 public record CarrierServiceId(String value) {
 }

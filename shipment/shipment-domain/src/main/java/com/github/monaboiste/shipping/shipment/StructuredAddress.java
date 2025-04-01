@@ -1,12 +1,12 @@
-package com.github.monaboiste.shipping;
+package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import org.jetbrains.annotations.Nullable;
 
-import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_COUNTRY;
-import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_LOCALITY;
-import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_POSTALCITY;
-import static com.github.monaboiste.shipping.error.GenericErrorCodes.EMPTY_ADDRESS_POSTCODE;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_ADDRESS_COUNTRY;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_ADDRESS_LOCALITY;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_ADDRESS_POSTALCITY;
+import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_ADDRESS_POSTCODE;
 
 public record StructuredAddress(Country country,
                                 String postcode,

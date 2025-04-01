@@ -1,9 +1,6 @@
 package com.github.monaboiste.shipping.shipment;
 
 import com.github.monaboiste.shipping.AggregateRoot;
-import com.github.monaboiste.shipping.CarrierServiceId;
-import com.github.monaboiste.shipping.Party;
-import com.github.monaboiste.shipping.ShipmentId;
 import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;

@@ -1,4 +1,4 @@
-package com.github.monaboiste.shipping;
+package com.github.monaboiste.shipping.shipment;
 
 /**
  * ISO 3166 country representation.
