@@ -102,5 +102,5 @@ tbc
 Before you commit copy all hooks into `.git` directory:
 
 ```shell
-cp ./hooks/* .git/hooks/
+cp ./.hooks/* .git/hooks/
 ```
