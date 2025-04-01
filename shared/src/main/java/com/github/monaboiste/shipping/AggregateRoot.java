@@ -32,11 +32,11 @@ public abstract class AggregateRoot<ID, E extends DomainEvent<?>> {
     public abstract ID id();
 
     /**
-     * @return actual version of {@code this} aggregate to support optimistic locking mechanism
+     * @return actual version (sequence number) of {@code this} aggregate to support optimistic locking mechanism
      * - leaked persistence concerns into domain model.
      */
-    public String version() {
-        return String.valueOf(version);
+    public int version() {
+        return version;
     }
 
     /**

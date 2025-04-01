@@ -5,20 +5,15 @@ import com.github.monaboiste.shipping.error.CannotBeEmptyException;
 import com.github.monaboiste.shipping.shipment.error.ShipmentStatusException;
 import com.github.monaboiste.shipping.shipment.event.ShipmentAllocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentCreated;
-import com.github.monaboiste.shipping.shipment.event.ShipmentDeallocated;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEvent;
 import com.github.monaboiste.shipping.shipment.event.ShipmentEventVisitor;
-import com.github.monaboiste.shipping.shipment.event.ShipmentReallocated;
 
 import java.util.List;
 import java.util.Optional;
 
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.ALLOCATED;
-import static com.github.monaboiste.shipping.shipment.ShipmentStatus.MANIFESTED;
 import static com.github.monaboiste.shipping.shipment.ShipmentStatus.PENDING;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_ALLOCATE_ALLOCATED;
-import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_DEALLOCATE_MANIFESTED;
-import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.CANNOT_REALLOCATE_NOT_ALLOCATED;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_ID;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_RECEIVER;
 import static com.github.monaboiste.shipping.shipment.error.ShipmentErrorCodes.EMPTY_SHIPMENT_SENDER;
@@ -69,10 +64,6 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
         appendEvent(new ShipmentCreated(this));
     }
 
-    public boolean isAllocated() {
-        return this.status.afterOrEqual(ALLOCATED);
-    }
-
     public void allocate(CarrierServiceId carrierServiceId) {
         if (status.after(ALLOCATED)) {
             throw new ShipmentStatusException(CANNOT_ALLOCATE_ALLOCATED,
@@ -81,25 +72,6 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
         status = ALLOCATED;
         allocationContext = new AllocationContext(carrierServiceId);
         appendEvent(new ShipmentAllocated(this));
-    }
-
-    public void reallocate(CarrierServiceId carrierServiceId) {
-        if (!status.equals(ALLOCATED)) {
-            throw new ShipmentStatusException(CANNOT_REALLOCATE_NOT_ALLOCATED,
-                    "The shipment cannot be reallocated as it is not allocated.");
-        }
-        var previousThisState = this;
-        allocationContext = new AllocationContext(carrierServiceId);
-        appendEvent(new ShipmentReallocated(this, previousThisState));
-    }
-
-    public void deallocate() {
-        if (status.afterOrEqual(MANIFESTED)) {
-            throw new ShipmentStatusException(CANNOT_DEALLOCATE_MANIFESTED,
-                    "The shipment cannot be deallocated as it has been already manifested.");
-        }
-        allocationContext = null;
-        appendEvent(new ShipmentDeallocated(this));
     }
 
     @Override
@@ -124,39 +96,21 @@ public class Shipment extends AggregateRoot<ShipmentId, ShipmentEvent> {
 
             @Override
             public void visit(ShipmentCreated event) {
-                applyShipmentCreated(event);
+                apply(Shipment.this, event);
             }
 
             @Override
             public void visit(ShipmentAllocated event) {
-                applyShipmentAllocated(event);
-            }
-
-            @Override
-            public void visit(ShipmentReallocated event) {
-                applyShipmentReallocated(event);
-            }
-
-            @Override
-            public void visit(ShipmentDeallocated event) {
-                applyShipmentDeallocated(event);
+                apply(Shipment.this, event);
             }
         });
     }
 
-    private void applyShipmentCreated(ShipmentCreated event) {
+    private static void apply(Shipment shipment, ShipmentCreated event) {
 
     }
 
-    private void applyShipmentAllocated(ShipmentAllocated event) {
-
-    }
-
-    private void applyShipmentReallocated(ShipmentReallocated event) {
-
-    }
-
-    private void applyShipmentDeallocated(ShipmentDeallocated event) {
+    private static void apply(Shipment shipment, ShipmentAllocated event) {
 
     }
 }

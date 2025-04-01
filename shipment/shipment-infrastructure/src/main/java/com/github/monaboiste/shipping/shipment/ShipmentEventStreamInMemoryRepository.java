@@ -1,9 +1,15 @@
 package com.github.monaboiste.shipping.shipment;
 
+import org.jetbrains.annotations.TestOnly;
+
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * TODO: to be moved to test source
+ */
+@TestOnly
 class ShipmentEventStreamInMemoryRepository implements ShipmentEventStreamRepository {
 
     private final Map<ShipmentId, ShipmentEventStream> streams;

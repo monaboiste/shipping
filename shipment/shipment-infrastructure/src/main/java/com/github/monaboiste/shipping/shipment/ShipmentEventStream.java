@@ -33,8 +33,8 @@ class ShipmentEventStream {
         return events;
     }
 
-    String version() {
-        return Integer.toString(version);
+    int version() {
+        return version;
     }
 
     void incrementVersion() {

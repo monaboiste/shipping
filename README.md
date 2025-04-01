@@ -4,8 +4,8 @@ tbc
 
 # Architecture Decision Record
 
-_(draft)_ Using the same database for the event store and a read model. 
-The variant _could_ be used for independent event store and other cases than updating read model - 
+_(draft)_ Using the same database for the event store and a read model.
+The variant _could_ be used for independent event store and other cases than updating read model -
 if we don't need at-least-once delivery.
 
 ```
@@ -104,3 +104,18 @@ Before you commit copy all hooks into `.git` directory:
 ```shell
 cp ./.hooks/* .git/hooks/
 ```
+
+# Dev notes (junk)
+
+Incoming vs outgoing events:
+
+1. Allocate
+
+Revisiting Allocate scenario:
+
+| Step                    | Action                                               | Transaction?                       | Event(s) Emitted                                                            |
+|-------------------------|------------------------------------------------------|------------------------------------|-----------------------------------------------------------------------------|
+| Allocate Shipment       | Client calls POST /shipments/{id}/allocate           | Yes (DB commit)                    | ShipmentAllocationRequested (incoming)                                      |
+| Validate Allocation     | System checks business rules                         | No (part of the same TX)           | -                                                                           |
+| Call Carrier API        | System requests shipping label                       | No (external call, not part of TX) | -                                                                           |
+| Handle Carrier Response | System updates shipment status based on API response | Yes (DB commit)                    | ShipmentAllocated (Success) / ShipmentAllocationFailed (Failure) (outgoing) |

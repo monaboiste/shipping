@@ -1,9 +1,9 @@
 package com.github.monaboiste.shipping.shipment.usecase;
 
-import com.github.monaboiste.shipping.shipment.CarrierServiceId;
-import com.github.monaboiste.shipping.shipment.ShipmentId;
 import com.github.monaboiste.shipping.error.NotFoundException;
+import com.github.monaboiste.shipping.shipment.CarrierServiceId;
 import com.github.monaboiste.shipping.shipment.Shipment;
+import com.github.monaboiste.shipping.shipment.ShipmentId;
 import com.github.monaboiste.shipping.shipment.ShipmentReadRepository;
 import com.github.monaboiste.shipping.shipment.ShipmentWriteRepository;
 import lombok.RequiredArgsConstructor;
@@ -34,13 +34,6 @@ class AllocationHandler implements AllocateShipment, ReallocateShipment {
 
     @Override
     public void reallocate(ShipmentId shipmentId, CarrierServiceId carrierServiceId) {
-        var tx = new TransactionTemplate(transactionManager);
-        tx.executeWithoutResult(_ -> {
-            Shipment shipment = shipmentReadRepository.findById(shipmentId)
-                    .orElseThrow(() -> new NotFoundException(SHIPMENT_DOES_NOT_EXISTS,
-                            "Shipment %s does not exist.".formatted(shipmentId)));
-            shipment.reallocate(carrierServiceId);
-            shipmentWriteRepository.save(shipment);
-        });
+        throw new UnsupportedOperationException();
     }
 }

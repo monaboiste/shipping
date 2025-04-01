@@ -17,6 +17,9 @@ dependencies {
     implementation project(":event:event-infrastructure")
     implementation project(":shipment:shipment-domain")
 
+    implementation("org.springframework:spring-jdbc")
+    runtimeOnly("org.postgresql:postgresql")
+
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     testCompileOnly(libs.lombok)

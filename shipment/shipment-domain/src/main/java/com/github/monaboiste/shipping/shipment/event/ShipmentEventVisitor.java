@@ -6,7 +6,4 @@ public interface ShipmentEventVisitor {
 
     void visit(ShipmentAllocated event);
 
-    void visit(ShipmentReallocated event);
-
-    void visit(ShipmentDeallocated event);
 }
