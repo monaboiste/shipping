@@ -20,7 +20,7 @@ afterEvaluate { project ->
                 all {
                     structure {
                         bundle("springframework") {
-                            include("org.springframework.*")
+                            // include("org.springframework.*") - try using starters as little as possible, application entry point is only valid place
                             // jackson is shipped with springframework.boot starter bundle
                             includeDependency("com.fasterxml.jackson.core:jackson-annotations")
                             includeDependency("com.fasterxml.jackson.core:jackson-databind")

@@ -18,6 +18,7 @@ dependencies {
     implementation project(":shipment:shipment-domain")
 
     implementation("org.springframework:spring-tx")
+    implementation("org.springframework:spring-web")
 
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)

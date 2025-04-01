@@ -17,8 +17,6 @@ dependencies {
     implementation project(":event:event-infrastructure")
     implementation project(":shipment:shipment-domain")
 
-    implementation("org.springframework.boot:spring-boot-starter-jdbc")
-
     compileOnly(libs.lombok)
     annotationProcessor(libs.lombok)
     testCompileOnly(libs.lombok)

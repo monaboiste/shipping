@@ -10,12 +10,12 @@ import java.io.ObjectOutputStream;
  * Built-in Java based serializer.
  * <p>
  * Cons:
- * <li>
- * <ul>very slow - for better performance consider using different method of serialization, e.g. Protobuf</ul>
- * <ul>large binary output (writes metadata)</ul>
- * <ul>not cross-platform</ul>
- * <ul>requires objects to implement {@link java.io.Serializable}</ul>
- * </li>
+ * <ul>
+ * <li>very slow - for better performance consider using different method of serialization, e.g. Protobuf
+ * <li>large binary output (writes metadata)
+ * <li>not cross-platform
+ * <li>requires objects to implement {@link java.io.Serializable}
+ * </ul>
  */
 public class JavaEventSerializer implements EventSerializer {
 
@@ -27,7 +27,8 @@ public class JavaEventSerializer implements EventSerializer {
             oos.flush();
             return baos.toByteArray();
         } catch (IOException ex) {
-            throw new IllegalArgumentException("Cannot serialize event %s".formatted(event.eventId()), ex);
+            throw new IllegalArgumentException("Cannot serialize %s event %s"
+                    .formatted(event.getClass().getSimpleName(), event.eventId()), ex);
         }
     }
 
@@ -36,7 +37,8 @@ public class JavaEventSerializer implements EventSerializer {
         try (ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(content))) {
             return eventType.cast(ois.readObject());
         } catch (Exception ex) {
-            throw new IllegalArgumentException("Cannot deserialize event", ex);
+            throw new IllegalArgumentException("Cannot deserialize %s event"
+                    .formatted(eventType.getSimpleName()), ex);
         }
     }
 }
